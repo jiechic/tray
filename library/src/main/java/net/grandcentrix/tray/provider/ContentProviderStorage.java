@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by pascalwelsch on 11/20/14.
@@ -117,7 +118,7 @@ public class ContentProviderStorage extends TrayStorage {
      * weak references to the listeners. Only the keys are used.
      */
     @VisibleForTesting
-    WeakHashMap<OnTrayPreferenceChangeListener, Handler> mListeners = new WeakHashMap<>();
+    Map<OnTrayPreferenceChangeListener, Handler> mListeners = new ConcurrentHashMap<>();
 
     /**
      * observes data changes for this storage
@@ -140,7 +141,7 @@ public class ContentProviderStorage extends TrayStorage {
     private final TrayUri mTrayUri;
 
     public ContentProviderStorage(@NonNull final Context context, @NonNull final String module,
-            @NonNull final Type type) {
+                                  @NonNull final Type type) {
         super(module, type);
         mContext = context.getApplicationContext();
         mTrayUri = new TrayUri(mContext);
@@ -244,7 +245,7 @@ public class ContentProviderStorage extends TrayStorage {
      */
     @Override
     public boolean put(@NonNull final String key, @Nullable final String migrationKey,
-            @Nullable final Object data) {
+                       @Nullable final Object data) {
         if (getType() == Type.UNDEFINED) {
             throw new TrayRuntimeException(
                     "writing data into a storage with type UNDEFINED is forbidden. Only Read and delete is allowed.");
