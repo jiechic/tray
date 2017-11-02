@@ -2,12 +2,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'jacoco'
 apply plugin: 'bintray-release'
 
-def final String VERSION_NAME = "0.12.0-SNAPSHOT"
+def final String VERSION_NAME = "0.12.1-SNAPSHOT"
 def final int VERSION_CODE = 14
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         minSdkVersion 15
@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:25.3.1'
+    compile 'com.android.support:support-annotations:26.1.0'
 
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
     androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
