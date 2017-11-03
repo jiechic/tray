@@ -90,8 +90,11 @@ public class ContentProviderStorage extends TrayStorage {
             final List<TrayItem> trayItems = mProviderHelper.queryProviderSafe(uri);
 
             // clone to get around ConcurrentModificationException
-            final Set<Map.Entry<OnTrayPreferenceChangeListener, Handler>> entries
-                    = new HashSet<>(mListeners.entrySet());
+            final Set<Map.Entry<OnTrayPreferenceChangeListener, Handler>> entries;
+            synchronized (ContentProviderStorage.class) {
+                entries = new HashSet<>(mListeners.entrySet());
+            }
+
 
             // notify all registered listeners
             for (final Map.Entry<OnTrayPreferenceChangeListener, Handler> entry : entries) {
@@ -285,9 +288,13 @@ public class ContentProviderStorage extends TrayStorage {
             handler = new Handler(looper);
         }
         //noinspection ConstantConditions
-        mListeners.put(listener, handler);
 
-        final Collection<OnTrayPreferenceChangeListener> listeners = mListeners.keySet();
+        final Collection<OnTrayPreferenceChangeListener> listeners;
+
+        synchronized (ContentProviderStorage.class) {
+            mListeners.put(listener, handler);
+            listeners = mListeners.keySet();
+        }
 
         if (listeners.size() == 1) {
 
@@ -357,7 +364,9 @@ public class ContentProviderStorage extends TrayStorage {
         if (listener == null) {
             return;
         }
-        mListeners.remove(listener);
+        synchronized (ContentProviderStorage.class) {
+            mListeners.remove(listener);
+        }
 
         if (mListeners.size() == 0) {
             mContext.getContentResolver().unregisterContentObserver(mObserver);

@@ -1,11 +1,11 @@
 apply plugin: 'com.android.library'
 
-def final String VERSION_NAME = "0.12.1-SNAPSHOT"
+def final String VERSION_NAME = "0.12.2-SNAPSHOT"
 def final int VERSION_CODE = 14
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 15
