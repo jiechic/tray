@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-def final String VERSION_NAME = "0.12.2-SNAPSHOT"
+def final String VERSION_NAME = "0.12.3-SNAPSHOT"
 def final int VERSION_CODE = 14
 
 android {

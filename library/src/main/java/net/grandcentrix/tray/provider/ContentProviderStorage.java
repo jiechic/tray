@@ -42,7 +42,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by pascalwelsch on 11/20/14.
@@ -121,7 +120,7 @@ public class ContentProviderStorage extends TrayStorage {
      * weak references to the listeners. Only the keys are used.
      */
     @VisibleForTesting
-    Map<OnTrayPreferenceChangeListener, Handler> mListeners = new ConcurrentHashMap<>();
+    WeakHashMap<OnTrayPreferenceChangeListener, Handler> mListeners = new WeakHashMap<>();
 
     /**
      * observes data changes for this storage
